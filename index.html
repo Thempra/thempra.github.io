@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thempra — Engineering Portfolio</title>
+<meta name="description" content="Shipped, self-hosted software with public quality metrics. Cybersecurity, trading systems, embedded and mobile — all live, all open source.">
+<meta property="og:title" content="Thempra — Engineering Portfolio">
+<meta property="og:description" content="Live projects with public code-quality metrics. No demos, no dead links.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/qzero.webp">
+<style>
+:root{
+  --bg:#0B0E14; --panel:#11151F; --border:#1C2333; --border-hi:#2A3550;
+  --text:#E6EAF2; --dim:#8B94A7; --accent:#4F7CFF; --green:#2FD57F; --violet:#8A5CFF;
+  --mono:ui-monospace,'SF Mono','Cascadia Code',Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* hero */
+.hero{padding:96px 0 64px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font:600 12px/1 var(--mono);
+  letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
+  border:1px solid var(--border);border-radius:99px;padding:8px 14px;margin-bottom:28px}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--green);
+  animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-size:clamp(38px,6vw,60px);line-height:1.08;font-weight:750;letter-spacing:-.02em}
+h1 .grad{background:linear-gradient(92deg,var(--accent),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{max-width:620px;color:var(--dim);font-size:18px;margin:20px 0 32px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;
+  border-radius:10px;padding:12px 22px;border:1px solid transparent;transition:.15s}
+.btn-solid{background:var(--accent);color:#fff}
+.btn-solid:hover{background:#3d6af0;text-decoration:none}
+.btn-ghost{border-color:var(--border-hi);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);text-decoration:none}
+
+/* stats strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:24px 0 80px}
+.stat{background:var(--panel);padding:22px 24px}
+.stat b{display:block;font:700 28px/1.2 var(--mono);color:var(--text)}
+.stat span{font:600 11px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+
+/* projects */
+h2{font-size:clamp(26px,4vw,34px);font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
+.sub{color:var(--dim);margin-bottom:36px;max-width:640px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:96px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;display:flex;flex-direction:column;transition:.18s}
+.card:hover{border-color:var(--border-hi);transform:translateY(-2px)}
+.shot{display:block;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#141a28,#0d1119);border-bottom:1px solid var(--border)}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.body{padding:24px;display:flex;flex-direction:column;gap:14px;flex:1}
+.card h3{font-size:21px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.active{display:inline-flex;align-items:center;gap:6px;font:600 10px/1 var(--mono);
+  letter-spacing:.1em;color:var(--green);border:1px solid rgba(47,213,127,.3);
+  border-radius:99px;padding:5px 10px}
+.active i{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2.4s infinite}
+.active.stale{color:var(--dim);border-color:var(--border)}
+.active.stale i{background:var(--dim);animation:none}
+.tag{color:var(--dim);font-size:15px}
+.stack{display:flex;flex-wrap:wrap;gap:8px}
+.stack span{font:600 11px/1 var(--mono);color:var(--dim);background:#161c2a;
+  border:1px solid var(--border);border-radius:6px;padding:6px 10px}
+.metrics{display:grid;grid-template-columns:repeat(4,auto);gap:6px 22px;
+  border-top:1px solid var(--border);padding-top:14px;margin-top:auto;width:max-content}
+.m b{display:block;font:600 15px/1.3 var(--mono)}
+.m b.ok{color:var(--green)}
+.m span{font:600 10px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.actions{display:flex;gap:10px}
+.btn-sm{font-size:13.5px;padding:9px 16px;border-radius:8px}
+
+/* quality */
+.quality{background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:72px 0;margin-bottom:0}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}
+.qcard{border:1px solid var(--border);border-radius:14px;padding:26px;background:var(--bg)}
+.qcard h3{font-size:17px;margin-bottom:10px;display:flex;gap:10px;align-items:center}
+.qcard p{color:var(--dim);font-size:14.5px}
+.qcard code{font:12px var(--mono);color:var(--accent);word-break:break-all}
+
+footer{padding:56px 0;text-align:center;color:var(--dim);font-size:14px}
+footer .fine{margin-top:8px;font:12px var(--mono);opacity:.7}
+
+@media(max-width:900px){
+  .grid,.qgrid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .hero{padding:64px 0 48px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <section class="hero">
+    <span class="kicker"><span class="dot"></span>Self-hosted · Open source · Continuously scanned</span>
+    <h1>Software that's<br><span class="grad">actually running</span> somewhere.</h1>
+    <p class="lede">Not a graveyard of tutorials. Every project below is deployed, in active
+    development, and carries public code-quality metrics pulled from my own SonarQube and
+    DefectDojo instances. Click anything — it works.</p>
+    <div class="cta">
+      <a class="btn btn-solid" href="#projects">View projects ↓</a>
+      <a class="btn btn-ghost" href="https://github.com/Thempra" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </section>
+
+  <div class="stats" aria-label="Aggregate metrics">
+    <div class="stat"><b>4</b><span>Live projects</span></div>
+    <div class="stat"><b>20.2K</b><span>Lines scanned</span></div>
+    <div class="stat"><b>0</b><span>Open vulnerabilities</span></div>
+    <div class="stat"><b>3/4</b><span>Pushed this week</span></div>
+  </div>
+
+  <h2 id="projects">Projects</h2>
+  <p class="sub">Metrics are real: LOC, coverage and vulnerability counts are pulled from
+  SonarQube scans and DefectDojo runs on the actual repositories.</p>
+
+  <div class="grid">
+
+    <article class="card">
+      <a class="shot" href="https://thempra.github.io/qzero/" target="_blank" rel="noopener">
+        <img src="assets/qzero.webp" alt="QZero — network threat detection platform landing page" loading="lazy">
+      </a>
+      <div class="body">
+        <h3>QZero <span class="active"><i></i>ACTIVE · OCT 14</span></h3>
+        <p class="tag">Network detection &amp; response that catches zero-day attacks with
+        Quantum SVM and quantum-inspired VAEs — no signatures, no cloud. Self-hosted, MIT.</p>
+        <div class="stack"><span>Python</span><span>Quantum ML</span><span>NDR</span><span>MIT</span></div>
+        <div class="metrics">
+          <div class="m" title="Non-comment lines of code (SonarQube)"><b>6,001</b><span>Lines</span></div>
+          <div class="m" title="Security hotspots & vulnerabilities (SonarQube)"><b class="ok">0</b><span>Vulns</span></div>
+          <div class="m" title="Maintainability rating A (SonarQube)"><b class="ok">A</b><span>Maintain.</span></div>
+          <div class="m" title="Active findings in DefectDojo: none Critical/High"><b class="ok">0</b><span>Crit/High</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-solid btn-sm" href="https://thempra.github.io/qzero/" target="_blank" rel="noopener">Live demo ↗</a>
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Thempra/qzero" target="_blank" rel="noopener">Source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <a class="shot" href="https://thempra.github.io/vagustrader/" target="_blank" rel="noopener">
+        <img src="assets/vagustrader.webp" alt="VagusTrader — automated Polymarket trading bot landing page" loading="lazy">
+      </a>
+      <div class="body">
+        <h3>VagusTrader <span class="active"><i></i>ACTIVE · OCT 14</span></h3>
+        <p class="tag">Autonomous 24/7 trading engine for prediction markets (Polymarket).
+        Whale-following, momentum and contrarian strategies, 15 risk guards, keys never
+        leave your machine.</p>
+        <div class="stack"><span>Go</span><span>Polymarket CLOB</span><span>SQLite</span><span>Docker</span></div>
+        <div class="metrics">
+          <div class="m" title="Non-comment lines of code (SonarQube)"><b>9,077</b><span>Lines</span></div>
+          <div class="m" title="Security vulnerabilities (SonarQube)"><b class="ok">0</b><span>Vulns</span></div>
+          <div class="m" title="Code smells (SonarQube)"><b class="ok">0</b><span>Smells</span></div>
+          <div class="m" title="Unit test coverage (SonarQube)"><b>18.3%</b><span>Coverage</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-solid btn-sm" href="https://thempra.github.io/vagustrader/" target="_blank" rel="noopener">Live demo ↗</a>
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Thempra/vagustrader" target="_blank" rel="noopener">Source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <a class="shot" href="https://thempra.github.io/overmind-ng/" target="_blank" rel="noopener">
+        <img src="assets/overmind-ng.webp" alt="Overmind NG — brainwave-controlled 1v1 game landing page" loading="lazy">
+      </a>
+      <div class="body">
+        <h3>Overmind NG <span class="active"><i></i>ACTIVE · OCT 14</span></h3>
+        <p class="tag">A real 1v1 fighting game driven by brainwaves: Flutter app + BLE stack
+        for a €20 EEG headset, FLAME game engine, on-device EEG analysis. Android · iOS · Linux.</p>
+        <div class="stack"><span>Flutter</span><span>BLE</span><span>FLAME</span><span>EEG</span></div>
+        <div class="metrics">
+          <div class="m" title="Non-comment lines of code (SonarQube)"><b>5,122</b><span>Lines</span></div>
+          <div class="m" title="Unit test coverage (SonarQube)"><b class="ok">94.6%</b><span>Coverage</span></div>
+          <div class="m" title="Bugs (SonarQube)"><b class="ok">0</b><span>Bugs</span></div>
+          <div class="m" title="Active security findings (DefectDojo)"><b class="ok">0</b><span>Findings</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-solid btn-sm" href="https://thempra.github.io/overmind-ng/" target="_blank" rel="noopener">Live demo ↗</a>
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Thempra/overmind-ng" target="_blank" rel="noopener">Source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <a class="shot" href="https://thempra.github.io/kidsclock/" target="_blank" rel="noopener">
+        <img src="assets/kidsclock.webp" alt="KidsClock — visual 24-hour routine clock for children" loading="lazy">
+      </a>
+      <div class="body">
+        <h3>KidsClock <span class="active stale"><i></i>STABLE · SEP 2025</span></h3>
+        <p class="tag">A visual 24-hour routine clock for kids: circular day schedule with
+        activity icons, current/next-activity cards, zero dependencies — pure vanilla JS.</p>
+        <div class="stack"><span>JavaScript</span><span>Zero deps</span><span>PWA-ready</span></div>
+        <div class="metrics">
+          <div class="m" title="No external requests, no backend, runs offline"><b class="ok">0</b><span>Deps</span></div>
+          <div class="m" title="No backend — nothing to breach"><b class="ok">—</b><span>Attack<br>surface</span></div>
+          <div class="m" title="Works fully offline in the browser"><b class="ok">✓</b><span>Offline</span></div>
+          <div class="m" title="Single HTML deliverable"><b>1</b><span>File<br>logic</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-solid btn-sm" href="https://thempra.github.io/kidsclock/" target="_blank" rel="noopener">Live demo ↗</a>
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Thempra/kidsclock" target="_blank" rel="noopener">Source</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<section class="quality">
+  <div class="wrap">
+    <h2>How this is measured</h2>
+    <p class="sub">Every metric on this page comes from tooling I run myself over these
+    repos. No vanity numbers.</p>
+    <div class="qgrid">
+      <div class="qcard">
+        <h3>◆ Static analysis — SonarQube</h3>
+        <p>Each repository is continuously scanned: LOC, test coverage, bugs, code smells
+        and security ratings. Results shown here are the current main-branch snapshot,
+        self-hosted at <code>sast.thempra.net</code>.</p>
+      </div>
+      <div class="qcard">
+        <h3>◆ Security &amp; DAST — DefectDojo</h3>
+        <p>Dependency audits, secret scans and dynamic tests feed a self-hosted DefectDojo
+        instance. Active findings are triaged by severity; the "Crit/High" figure reflects
+        live open findings today.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Thempra · <a href="https://github.com/Thempra" target="_blank" rel="noopener">github.com/Thempra</a></p>
+    <p class="fine">This page: one HTML file, one CSS block, zero frameworks, zero trackers. Metrics refreshed manually — see repo.</p>
+  </div>
+</footer>
+
+</body>
+</html>
