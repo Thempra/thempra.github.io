@@ -14,7 +14,7 @@ demuestra que están **vivos y activos** (métricas públicas reales) y enlaza a
 ## Funcionalidades
 - **F-1 Landing single-page** con identidad personal (nombre, rol, tagline) y CTAs
   (GitHub, email/contacto).
-- **F-2 Grid de proyectos activos**: 4 tarjetas (QZero, VagusTrader, Overmind NG, KidsClock),
+- **F-2 Grid de proyectos activos**: 4 tarjetas (QZero, VagusTrader, Overmind NG, p92-checklist),
   cada una con:
   - Screenshot real de la web (self-hosted, WebP)
   - Qué es (1-2 frases orientadas a valor, sin jerga innecesaria)

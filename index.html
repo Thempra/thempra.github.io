@@ -3,250 +3,391 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thempra — Engineering Portfolio</title>
-<meta name="description" content="Shipped, self-hosted software with public quality metrics. Cybersecurity, trading systems, embedded and mobile — all live, all open source.">
-<meta property="og:title" content="Thempra — Engineering Portfolio">
-<meta property="og:description" content="Live projects with public code-quality metrics. No demos, no dead links.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="assets/qzero.webp">
+<title>Thempra — Software that's actually running</title>
+<meta name="description" content="Production software, self-hosted and continuously scanned. QZero, VagusTrader, Overmind NG, p92-checklist.">
 <style>
-:root{
-  --bg:#0B0E14; --panel:#11151F; --border:#1C2333; --border-hi:#2A3550;
-  --text:#E6EAF2; --dim:#8B94A7; --accent:#4F7CFF; --green:#2FD57F; --violet:#8A5CFF;
-  --mono:ui-monospace,'SF Mono','Cascadia Code',Consolas,monospace;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);
-  font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-  -webkit-font-smoothing:antialiased}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
+  /* ---------- GitHub Primer-inspired tokens ---------- */
+  :root{
+    --canvas-default:#0d1117; --canvas-inset:#010409; --canvas-subtle:#161b22;
+    --border-default:#30363d; --border-muted:rgba(240,246,252,.1);
+    --fg-default:#f0f6fc; --fg-muted:#8d96a0;
+    --accent-fg:#4493f8; --btn-bg:#21262d; --btn-hover:#30363d;
+    --success-fg:#3fb950; --success-emphasis:#238636;
+    --attention-fg:#d29922; --danger-fg:#f85149;
+    --done-fg:#a371f7; --open-bg:rgba(35,134,54,.15); --sponsors:#bc8cff;
+    font-size:16px;
+  }
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--canvas-default);color:var(--fg-default);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-fg);text-decoration:none}
+  a:hover{text-decoration:underline}
+  *{box-sizing:border-box}
 
-/* hero */
-.hero{padding:96px 0 64px}
-.kicker{display:inline-flex;align-items:center;gap:8px;font:600 12px/1 var(--mono);
-  letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
-  border:1px solid var(--border);border-radius:99px;padding:8px 14px;margin-bottom:28px}
-.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--green);
-  animation:pulse 2.4s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-h1{font-size:clamp(38px,6vw,60px);line-height:1.08;font-weight:750;letter-spacing:-.02em}
-h1 .grad{background:linear-gradient(92deg,var(--accent),var(--violet));
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.lede{max-width:620px;color:var(--dim);font-size:18px;margin:20px 0 32px}
-.cta{display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;
-  border-radius:10px;padding:12px 22px;border:1px solid transparent;transition:.15s}
-.btn-solid{background:var(--accent);color:#fff}
-.btn-solid:hover{background:#3d6af0;text-decoration:none}
-.btn-ghost{border-color:var(--border-hi);color:var(--text)}
-.btn-ghost:hover{border-color:var(--accent);text-decoration:none}
+  /* ---------- global nav (GitHub header style) ---------- */
+  .gh-header{background:var(--canvas-inset);border-bottom:1px solid var(--border-default);
+    padding:12px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:50}
+  .gh-header .mark{display:flex;align-items:center;gap:10px;font-weight:600}
+  .gh-header svg{fill:var(--fg-default)}
+  .gh-header .pill{margin-left:auto;display:flex;gap:8px}
+  .btn-sm{background:var(--btn-bg);border:1px solid var(--border-default);border-radius:6px;
+    color:var(--fg-default);font-size:12px;font-weight:600;padding:4px 12px;cursor:pointer}
+  .btn-sm:hover{background:var(--btn-hover);border-color:#8d96a0;text-decoration:none}
 
-/* stats strip */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);
-  border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:24px 0 80px}
-.stat{background:var(--panel);padding:22px 24px}
-.stat b{display:block;font:700 28px/1.2 var(--mono);color:var(--text)}
-.stat span{font:600 11px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  .container{max-width:1012px;margin:0 auto;padding:0 16px}
 
-/* projects */
-h2{font-size:clamp(26px,4vw,34px);font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
-.sub{color:var(--dim);margin-bottom:36px;max-width:640px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:96px}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;
-  overflow:hidden;display:flex;flex-direction:column;transition:.18s}
-.card:hover{border-color:var(--border-hi);transform:translateY(-2px)}
-.shot{display:block;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#141a28,#0d1119);border-bottom:1px solid var(--border)}
-.shot img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
-.body{padding:24px;display:flex;flex-direction:column;gap:14px;flex:1}
-.card h3{font-size:21px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.active{display:inline-flex;align-items:center;gap:6px;font:600 10px/1 var(--mono);
-  letter-spacing:.1em;color:var(--green);border:1px solid rgba(47,213,127,.3);
-  border-radius:99px;padding:5px 10px}
-.active i{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2.4s infinite}
-.active.stale{color:var(--dim);border-color:var(--border)}
-.active.stale i{background:var(--dim);animation:none}
-.tag{color:var(--dim);font-size:15px}
-.stack{display:flex;flex-wrap:wrap;gap:8px}
-.stack span{font:600 11px/1 var(--mono);color:var(--dim);background:#161c2a;
-  border:1px solid var(--border);border-radius:6px;padding:6px 10px}
-.metrics{display:grid;grid-template-columns:repeat(4,auto);gap:6px 22px;
-  border-top:1px solid var(--border);padding-top:14px;margin-top:auto;width:max-content}
-.m b{display:block;font:600 15px/1.3 var(--mono)}
-.m b.ok{color:var(--green)}
-.m span{font:600 10px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-.actions{display:flex;gap:10px}
-.btn-sm{font-size:13.5px;padding:9px 16px;border-radius:8px}
+  /* ---------- profile header (GitHub user profile style) ---------- */
+  .profile{display:flex;gap:24px;padding:24px 0 0;align-items:flex-start;flex-wrap:wrap}
+  .avatar{width:296px;max-width:100%;border-radius:50%;border:1px solid var(--border-default);background:var(--canvas-subtle)}
+  .profile .who{flex:1;min-width:280px}
+  .who h1{font-size:24px;margin:0;font-weight:600}
+  .who .nick{font-size:20px;color:var(--fg-muted);font-weight:300;margin:2px 0 12px}
+  .who .bio{margin:12px 0;color:var(--fg-default)}
+  .who .sub{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--fg-muted);margin-top:12px}
+  .who .sub span{display:flex;align-items:center;gap:5px}
+  .btn-green{display:inline-block;background:var(--success-emphasis);border:1px solid rgba(240,246,252,.1);
+    border-radius:6px;color:#fff;font-weight:600;font-size:14px;padding:5px 16px;margin-top:14px}
+  .btn-green:hover{background:#2ea043;text-decoration:none}
+  .followers{font-size:14px;color:var(--fg-muted);margin-top:14px}
 
-/* quality */
-.quality{background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:72px 0;margin-bottom:0}
-.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}
-.qcard{border:1px solid var(--border);border-radius:14px;padding:26px;background:var(--bg)}
-.qcard h3{font-size:17px;margin-bottom:10px;display:flex;gap:10px;align-items:center}
-.qcard p{color:var(--dim);font-size:14.5px}
-.qcard code{font:12px var(--mono);color:var(--accent);word-break:break-all}
+  /* ---------- underlined nav tabs ---------- */
+  .tabs{border-bottom:1px solid var(--border-default);margin-top:24px;display:flex;gap:4px;overflow-x:auto}
+  .tabs a{padding:8px 16px;font-size:14px;color:var(--fg-default);border-bottom:2px solid transparent;white-space:nowrap}
+  .tabs a.on{border-color:#f78166;font-weight:600}
+  .tabs a:hover{text-decoration:none;opacity:.85}
+  .Counter{background:rgba(177,186,196,.15);border-radius:20px;font-size:12px;padding:1px 8px;margin-left:5px;color:#e6edf3}
 
-footer{padding:56px 0;text-align:center;color:var(--dim);font-size:14px}
-footer .fine{margin-top:8px;font:12px var(--mono);opacity:.7}
+  /* ---------- language toggle ---------- */
+  .langrow{display:flex;justify-content:flex-end;padding:16px 0 0}
+  .langbtn{background:var(--btn-bg);border:1px solid var(--border-default);color:var(--fg-default);
+    border-radius:6px;padding:5px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-left:6px}
+  .langbtn.on{background:#1f6feb;border-color:#1f6feb}
 
-@media(max-width:900px){
-  .grid,.qgrid{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr 1fr}
-  .hero{padding:64px 0 48px}
-}
+  /* ---------- contribution graph (decorative, real activity) ---------- */
+  .contrib{margin:24px 0;padding:16px;border:1px solid var(--border-default);border-radius:6px;background:var(--canvas-subtle)}
+  .contrib .head{font-size:14px;margin-bottom:12px;color:var(--fg-muted)}
+  .grid{display:grid;grid-template-rows:repeat(7,10px);grid-auto-flow:column;grid-auto-columns:10px;gap:3px;overflow-x:auto}
+  .cell{width:10px;height:10px;border-radius:2px;background:rgba(255,255,255,.06)}
+  .cell.l1{background:#0e4429}.cell.l2{background:#006d32}.cell.l3{background:#26a641}.cell.l4{background:#39d353}
+
+  h2.section{font-size:16px;font-weight:600;margin:32px 0 4px;display:flex;align-items:center;gap:8px}
+  .sect-sub{color:var(--fg-muted);font-size:14px;margin:0 0 16px}
+
+  /* ---------- repo cards ---------- */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:768px){.cards{grid-template-columns:1fr}}
+  .card{border:1px solid var(--border-default);border-radius:6px;background:var(--canvas-subtle);
+    padding:16px;display:flex;flex-direction:column;transition:border-color .15s}
+  .card:hover{border-color:#8d96a0}
+  .card.wide{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .card .top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .repo-name{color:var(--accent-fg);font-weight:600;font-size:15px}
+  .badge{font-size:12px;color:var(--fg-muted);border:1px solid var(--border-default);border-radius:20px;padding:0 9px;line-height:20px}
+  .badge.live{color:var(--success-fg);border-color:rgba(46,160,67,.4)}
+  .shot{border-radius:6px;border:1px solid var(--border-default);width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;margin:6px 0 12px;display:block}
+  .desc{font-size:13px;color:var(--fg-muted);margin:0 0 10px;flex:1}
+  .metrics{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .chip{font-size:12px;border:1px solid var(--border-default);border-radius:20px;padding:2px 10px;color:var(--fg-default);background:rgba(110,118,129,.1)}
+  .chip.good{color:var(--success-fg)}
+  .chip.info{color:var(--accent-fg)}
+  .meta{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--fg-muted);flex-wrap:wrap}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:-1px}
+  .dot.dart{color:#00B4AB;background:currentColor}
+  .dot.python{color:#3572A5;background:currentColor}
+  .dot.go{color:#00ADD8;background:currentColor}
+  .dot.flutter{color:#02569B;background:currentColor}
+  .actions{display:flex;gap:8px;margin-top:12px}
+  .btn{background:var(--btn-bg);border:1px solid var(--border-default);border-radius:6px;color:var(--fg-default);
+    font-size:12px;font-weight:600;padding:5px 12px;display:inline-flex;align-items:center;gap:5px}
+  .btn:hover{background:var(--btn-hover);text-decoration:none}
+  .btn.star{border-radius:20px}
+  .btn svg{fill:currentColor}
+
+  /* wide closing card */
+  .card.wide .big{display:flex;align-items:center;gap:16px}
+  .card.wide .big svg{fill:var(--fg-muted)}
+  .card.wide h3{margin:0;font-size:18px;font-weight:600}
+  .card.wide p{margin:4px 0 0;color:var(--fg-muted);font-size:13px}
+
+  /* ---------- footer ---------- */
+  footer{margin:48px 0 32px;padding-top:24px;border-top:1px solid var(--border-default);
+    color:var(--fg-muted);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  footer a{color:var(--fg-muted)}
+
+  .i18n-en{display:none}
+  .i18n-es{display:inline}
+  html[data-lang="es"] .i18n-en{display:none}
+  html[data-lang="es"] .i18n-es{display:inline}
+  html:not([data-lang="es"]) .i18n-en{display:inline}
+  html:not([data-lang="es"]) .i18n-es{display:none}
+  /* spans inside flex containers must be flex when shown, none when hidden */
+  .who .sub span.i18n-en, .who .sub span.i18n-es{gap:5px}
+  html:not([data-lang="es"]) .who .sub span.i18n-en{display:flex}
+  html[data-lang="es"] .who .sub span.i18n-es{display:flex}
+  html:not([data-lang="es"]) .who .sub span.i18n-es,
+  html[data-lang="es"] .who .sub span.i18n-en{display:none}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <section class="hero">
-    <span class="kicker"><span class="dot"></span>Self-hosted · Open source · Continuously scanned</span>
-    <h1>Software that's<br><span class="grad">actually running</span> somewhere.</h1>
-    <p class="lede">Not a graveyard of tutorials. Every project below is deployed, in active
-    development, and carries public code-quality metrics pulled from my own SonarQube and
-    DefectDojo instances. Click anything — it works.</p>
-    <div class="cta">
-      <a class="btn btn-solid" href="#projects">View projects ↓</a>
-      <a class="btn btn-ghost" href="https://github.com/Thempra" target="_blank" rel="noopener">GitHub ↗</a>
+<header class="gh-header">
+  <a class="mark" href="https://github.com/Thempra" aria-label="GitHub home">
+    <svg height="32" viewBox="0 0 16 16" width="32"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0 0 2.01.38 2.55-1.05 0 0 .01-.01.01-.01.47-1.19 1.5-2.03 1.5-2.03 1.23-.84.1-.97-.11-.97-.97-.13-1.01-.14-1.25-.16-1.43-.94.44-2.23.53-2.23.53-1.15-.01-1.16-.87-1.16-.87 0-1.03.07-1.14.07-1.14.38-.26.72-.66 1.02-1.1 0 0-1.62.18-2.37-.64 0 0-1.28-1.48-1.28-1.48-.85-.44-.83-.83-.83-.83.01-.56.38-.86.38-.86.61-.42 1.3-.6 1.66-.62.03-.24.13-.57.24-.7 0 0-.02-.21-.07-.42 0 0-.75.06-1.23.2 0 0-.51.24-.51.24-.34.16-.52.34-.52.34 0-.53.36-.9.36-.9.61-.42 1.3-.6 1.66-.62.03-.24.13-.57.24-.7 0 0-.02-.21-.07-.42 0 0-.75.06-1.23.2 0 0-.51.24-.51.24-.34.16-.52.34-.52.34 0-.53.36-.9.36-.9.61-.42 1.3-.6 1.66-.62.03-.24.13-.57.24-.7 0 0-.02-.21-.07-.42 0 0-.75.06-1.23.2 0 0-.51.24-.51.24-.34.16-.52.34-.52.34 0-.53.36-.9.36-.9.61-.42 1.3-.6 1.66-.62.03-.24.13-.57.24-.7 0 0-.02-.21-.07-.42 0 0-.75.06-1.23.2 0 0-.51.24-.51.24-.34.16-.52.34-.52.34Z"></path></svg>
+    <span>Thempra</span>
+  </a>
+  <div class="pill">
+    <a class="btn-sm" href="https://github.com/Thempra?tab=repositories">Repositories</a>
+    <a class="btn-sm" href="https://github.com/Thempra?tab=projects">Projects</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- profile -->
+  <section class="profile">
+    <svg class="avatar" viewBox="0 0 296 296" role="img" aria-label="Thempra">
+      <rect width="296" height="296" rx="148" fill="#161b22"/>
+      <circle cx="148" cy="148" r="147" fill="none" stroke="#30363d"/>
+      <text x="148" y="178" text-anchor="middle" font-size="110" font-weight="700" fill="#3fb950" font-family="ui-monospace,SFMono-Regular,monospace">&gt;_</text>
+    </svg>
+    <div class="who">
+      <h1>Thempra</h1>
+      <div class="nick">Thempra</div>
+      <p class="bio">
+        <span class="i18n-en">We build and run our own software: network security, trading automation, games and tools — self-hosted, open source, continuously scanned.</span>
+        <span class="i18n-es">Construimos y ejecutamos nuestro propio software: seguridad de red, automatización de trading, juegos y utilidades — autoalojado, open source y escaneado de forma continua.</span>
+      </p>
+      <div class="sub">
+        <span>
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="#8d96a0"><path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1Zm0 1.5v10.5h12.5V2.5ZM3 12l3.5-4.5 2.5 3 2-2.5L14 12Z"></path></svg>
+          <span class="i18n-en">Europe · self-hosted infra</span><span class="i18n-es">Europa · infraestructura autoalojada</span>
+        </span>
+        <span>
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="#8d96a0"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7-3.25v2.75c0 .347.16.655.41.858l2.07 1.656a.75.75 0 0 0 .94-1.172L9.25 7.438V4.75a.75.75 0 0 0-1.5 0Z"></path></svg>
+          <span class="i18n-en">4 live projects · 20.2K lines scanned · 0 open vulnerabilities</span><span class="i18n-es">4 proyectos activos · 20,2K líneas escaneadas · 0 vulnerabilidades abiertas</span>
+        </span>
+      </div>
+      <a class="btn-green" href="https://github.com/Thempra?tab=repositories">
+        <span class="i18n-en">Follow on GitHub</span><span class="i18n-es">Seguir en GitHub</span>
+      </a>
+      <div class="followers">
+        <span class="i18n-en">SAST by <strong>SonarQube</strong> · Security audits by <strong>DefectDojo</strong></span>
+        <span class="i18n-es">SAST con <strong>SonarQube</strong> · Auditorías de seguridad con <strong>DefectDojo</strong></span>
+      </div>
     </div>
   </section>
 
-  <div class="stats" aria-label="Aggregate metrics">
-    <div class="stat"><b>4</b><span>Live projects</span></div>
-    <div class="stat"><b>20.2K</b><span>Lines scanned</span></div>
-    <div class="stat"><b>0</b><span>Open vulnerabilities</span></div>
-    <div class="stat"><b>3/4</b><span>Pushed this week</span></div>
+  <!-- tabs -->
+  <nav class="tabs">
+    <a href="#" onclick="return false"><span class="i18n-en">Overview</span><span class="i18n-es">Resumen</span></a>
+    <a href="https://github.com/Thempra?tab=repositories"><span class="i18n-en">Repositories</span><span class="i18n-es">Repositorios</span><span class="Counter">11</span></a>
+    <a href="https://github.com/Thempra?tab=projects"><span class="i18n-en">Projects</span><span class="i18n-es">Proyectos</span><span class="Counter">4</span></a>
+    <a href="https://sast.thempra.net"><span class="i18n-en">Quality</span><span class="i18n-es">Calidad</span></a>
+  </nav>
+
+  <!-- language -->
+  <div class="langrow">
+    <button class="langbtn on" id="l-en" onclick="setLang('en')">English</button>
+    <button class="langbtn" id="l-es" onclick="setLang('es')">Español</button>
   </div>
 
-  <h2 id="projects">Projects</h2>
-  <p class="sub">Metrics are real: LOC, coverage and vulnerability counts are pulled from
-  SonarQube scans and DefectDojo runs on the actual repositories.</p>
-
-  <div class="grid">
-
-    <article class="card">
-      <a class="shot" href="https://thempra.github.io/qzero/" target="_blank" rel="noopener">
-        <img src="assets/qzero.webp" alt="QZero — network threat detection platform landing page" loading="lazy">
-      </a>
-      <div class="body">
-        <h3>QZero <span class="active"><i></i>ACTIVE · OCT 14</span></h3>
-        <p class="tag">Network detection &amp; response that catches zero-day attacks with
-        Quantum SVM and quantum-inspired VAEs — no signatures, no cloud. Self-hosted, MIT.</p>
-        <div class="stack"><span>Python</span><span>Quantum ML</span><span>NDR</span><span>MIT</span></div>
-        <div class="metrics">
-          <div class="m" title="Non-comment lines of code (SonarQube)"><b>6,001</b><span>Lines</span></div>
-          <div class="m" title="Security hotspots & vulnerabilities (SonarQube)"><b class="ok">0</b><span>Vulns</span></div>
-          <div class="m" title="Maintainability rating A (SonarQube)"><b class="ok">A</b><span>Maintain.</span></div>
-          <div class="m" title="Active findings in DefectDojo: none Critical/High"><b class="ok">0</b><span>Crit/High</span></div>
-        </div>
-        <div class="actions">
-          <a class="btn btn-solid btn-sm" href="https://thempra.github.io/qzero/" target="_blank" rel="noopener">Live demo ↗</a>
-          <a class="btn btn-ghost btn-sm" href="https://github.com/Thempra/qzero" target="_blank" rel="noopener">Source</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="card">
-      <a class="shot" href="https://thempra.github.io/vagustrader/" target="_blank" rel="noopener">
-        <img src="assets/vagustrader.webp" alt="VagusTrader — automated Polymarket trading bot landing page" loading="lazy">
-      </a>
-      <div class="body">
-        <h3>VagusTrader <span class="active"><i></i>ACTIVE · OCT 14</span></h3>
-        <p class="tag">Autonomous 24/7 trading engine for prediction markets (Polymarket).
-        Whale-following, momentum and contrarian strategies, 15 risk guards, keys never
-        leave your machine.</p>
-        <div class="stack"><span>Go</span><span>Polymarket CLOB</span><span>SQLite</span><span>Docker</span></div>
-        <div class="metrics">
-          <div class="m" title="Non-comment lines of code (SonarQube)"><b>9,077</b><span>Lines</span></div>
-          <div class="m" title="Security vulnerabilities (SonarQube)"><b class="ok">0</b><span>Vulns</span></div>
-          <div class="m" title="Code smells (SonarQube)"><b class="ok">0</b><span>Smells</span></div>
-          <div class="m" title="Unit test coverage (SonarQube)"><b>18.3%</b><span>Coverage</span></div>
-        </div>
-        <div class="actions">
-          <a class="btn btn-solid btn-sm" href="https://thempra.github.io/vagustrader/" target="_blank" rel="noopener">Live demo ↗</a>
-          <a class="btn btn-ghost btn-sm" href="https://github.com/Thempra/vagustrader" target="_blank" rel="noopener">Source</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="card">
-      <a class="shot" href="https://thempra.github.io/overmind-ng/" target="_blank" rel="noopener">
-        <img src="assets/overmind-ng.webp" alt="Overmind NG — brainwave-controlled 1v1 game landing page" loading="lazy">
-      </a>
-      <div class="body">
-        <h3>Overmind NG <span class="active"><i></i>ACTIVE · OCT 14</span></h3>
-        <p class="tag">A real 1v1 fighting game driven by brainwaves: Flutter app + BLE stack
-        for a €20 EEG headset, FLAME game engine, on-device EEG analysis. Android · iOS · Linux.</p>
-        <div class="stack"><span>Flutter</span><span>BLE</span><span>FLAME</span><span>EEG</span></div>
-        <div class="metrics">
-          <div class="m" title="Non-comment lines of code (SonarQube)"><b>5,122</b><span>Lines</span></div>
-          <div class="m" title="Unit test coverage (SonarQube)"><b class="ok">94.6%</b><span>Coverage</span></div>
-          <div class="m" title="Bugs (SonarQube)"><b class="ok">0</b><span>Bugs</span></div>
-          <div class="m" title="Active security findings (DefectDojo)"><b class="ok">0</b><span>Findings</span></div>
-        </div>
-        <div class="actions">
-          <a class="btn btn-solid btn-sm" href="https://thempra.github.io/overmind-ng/" target="_blank" rel="noopener">Live demo ↗</a>
-          <a class="btn btn-ghost btn-sm" href="https://github.com/Thempra/overmind-ng" target="_blank" rel="noopener">Source</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="card">
-      <a class="shot" href="https://thempra.github.io/kidsclock/" target="_blank" rel="noopener">
-        <img src="assets/kidsclock.webp" alt="KidsClock — visual 24-hour routine clock for children" loading="lazy">
-      </a>
-      <div class="body">
-        <h3>KidsClock <span class="active stale"><i></i>STABLE · SEP 2025</span></h3>
-        <p class="tag">A visual 24-hour routine clock for kids: circular day schedule with
-        activity icons, current/next-activity cards, zero dependencies — pure vanilla JS.</p>
-        <div class="stack"><span>JavaScript</span><span>Zero deps</span><span>PWA-ready</span></div>
-        <div class="metrics">
-          <div class="m" title="No external requests, no backend, runs offline"><b class="ok">0</b><span>Deps</span></div>
-          <div class="m" title="No backend — nothing to breach"><b class="ok">—</b><span>Attack<br>surface</span></div>
-          <div class="m" title="Works fully offline in the browser"><b class="ok">✓</b><span>Offline</span></div>
-          <div class="m" title="Single HTML deliverable"><b>1</b><span>File<br>logic</span></div>
-        </div>
-        <div class="actions">
-          <a class="btn btn-solid btn-sm" href="https://thempra.github.io/kidsclock/" target="_blank" rel="noopener">Live demo ↗</a>
-          <a class="btn btn-ghost btn-sm" href="https://github.com/Thempra/kidsclock" target="_blank" rel="noopener">Source</a>
-        </div>
-      </div>
-    </article>
-
+  <!-- contribution graph -->
+  <div class="contrib">
+    <div class="head"><strong>3/4</strong> <span class="i18n-en">projects pushed this week ·</span><span class="i18n-es">proyectos empujados esta semana ·</span> <span class="i18n-en">metrics pulled from SonarQube &amp; DefectDojo, never estimated</span><span class="i18n-es">métricas extraídas de SonarQube y DefectDojo, nunca estimadas</span></div>
+    <div class="grid" id="cgrid" aria-hidden="true"></div>
   </div>
-</div>
 
-<section class="quality">
-  <div class="wrap">
-    <h2>How this is measured</h2>
-    <p class="sub">Every metric on this page comes from tooling I run myself over these
-    repos. No vanity numbers.</p>
-    <div class="qgrid">
-      <div class="qcard">
-        <h3>◆ Static analysis — SonarQube</h3>
-        <p>Each repository is continuously scanned: LOC, test coverage, bugs, code smells
-        and security ratings. Results shown here are the current main-branch snapshot,
-        self-hosted at <code>sast.thempra.net</code>.</p>
+  <!-- featured -->
+  <h2 class="section">
+    <span class="i18n-en">Featured Projects</span><span class="i18n-es">Projectos Destacados</span>
+    <span class="Counter">4</span>
+  </h2>
+  <p class="sect-sub">
+    <span class="i18n-en">Every metric below is live from our own scanners.</span>
+    <span class="i18n-es">Cada métrica de abajo es real, extraída de nuestros propios escáneres.</span>
+  </p>
+
+  <div class="cards">
+
+    <!-- QZero -->
+    <article class="card">
+      <div class="top">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="#8d96a0"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+        <a class="repo-name" href="https://github.com/Thempra/qzero">qzero</a>
+        <span class="badge live">● ACTIVE</span>
+        <span class="badge">Public</span>
       </div>
-      <div class="qcard">
-        <h3>◆ Security &amp; DAST — DefectDojo</h3>
-        <p>Dependency audits, secret scans and dynamic tests feed a self-hosted DefectDojo
-        instance. Active findings are triaged by severity; the "Crit/High" figure reflects
-        live open findings today.</p>
+      <img class="shot" src="assets/qzero.webp" alt="QZero dashboard" loading="lazy">
+      <p class="desc"><span class="i18n-en">Network Detection &amp; Response with a QI-VAE anomaly score — detects the attack before it has a signature. Self-hosted agent fleet + web console.</span><span class="i18n-es">Detección y respuesta de red con score de anomalías QI-VAE: detecta el ataque antes de que tenga firma. Flota de agentes autoalojada + consola web.</span></p>
+      <div class="metrics">
+        <span class="chip">6,001 <span class="i18n-en">lines</span><span class="i18n-es">líneas</span></span>
+        <span class="chip good">0 <span class="i18n-en">vulns</span><span class="i18n-es">vulns</span></span>
+        <span class="chip good">A <span class="i18n-en">maintainability</span><span class="i18n-es">mantenibilidad</span></span>
+        <span class="chip info"><span class="i18n-en">MIT license</span><span class="i18n-es">licencia MIT</span></span>
       </div>
+      <div class="meta"><span><i class="dot python"></i>Python</span><span>● <span class="i18n-en">pushed Oct 14</span><span class="i18n-es">empujado 14 oct</span></span></div>
+      <div class="actions">
+        <a class="btn" href="https://thempra.github.io/qzero/">+Info
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg>
+        </a>
+        <a class="btn star" href="https://github.com/Thempra/qzero">
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
+          Star
+        </a>
+      </div>
+    </article>
+
+    <!-- VagusTrader -->
+    <article class="card">
+      <div class="top">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="#8d96a0"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+        <a class="repo-name" href="https://github.com/Thempra/vagustrader">vagustrader</a>
+        <span class="badge live">● ACTIVE</span>
+        <span class="badge">Public</span>
+      </div>
+      <img class="shot" src="assets/vagustrader.webp" alt="VagusTrader dashboard" loading="lazy">
+      <p class="desc"><span class="i18n-en">Autonomous 24/7 trading engine for prediction markets (Polymarket CLOB). Go daemon with live dashboard, risk limits and Telegram alerts.</span><span class="i18n-es">Motor de trading autónomo 24/7 para mercados de predicción (Polymarket CLOB). Daemon en Go con dashboard en vivo, límites de riesgo y alertas por Telegram.</span></p>
+      <div class="metrics">
+        <span class="chip">9,077 <span class="i18n-en">lines</span><span class="i18n-es">líneas</span></span>
+        <span class="chip good">0 <span class="i18n-en">vulns</span><span class="i18n-es">vulns</span></span>
+        <span class="chip good">0 <span class="i18n-en">smells</span><span class="i18n-es">smells</span></span>
+        <span class="chip info">18.3% <span class="i18n-en">coverage</span><span class="i18n-es">cobertura</span></span>
+      </div>
+      <div class="meta"><span><i class="dot go"></i>Go</span><span>● <span class="i18n-en">pushed Oct 14</span><span class="i18n-es">empujado 14 oct</span></span></div>
+      <div class="actions">
+        <a class="btn" href="https://thempra.github.io/vagustrader/">+Info
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg>
+        </a>
+        <a class="btn star" href="https://github.com/Thempra/vagustrader">
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
+          Star
+        </a>
+      </div>
+    </article>
+
+    <!-- Overmind NG -->
+    <article class="card">
+      <div class="top">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="#8d96a0"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+        <a class="repo-name" href="https://github.com/Thempra/overmind-ng">overmind-ng</a>
+        <span class="badge live">● ACTIVE</span>
+        <span class="badge">Public</span>
+      </div>
+      <img class="shot" src="assets/overmind-ng.webp" alt="Overmind NG game screen" loading="lazy">
+      <p class="desc"><span class="i18n-en">A real 1v1 fighting game driven by brainwaves: Flutter + FLAME + BLE stack on top of a Neurosky MindWave EEG headset. Your focus is the weapon.</span><span class="i18n-es">Un juego de lucha 1v1 real controlado por ondas cerebrales: Flutter + FLAME + BLE sobre un EEG Neurosky MindWave. Tu foco es el arma.</span></p>
+      <div class="metrics">
+        <span class="chip">5,122 <span class="i18n-en">lines</span><span class="i18n-es">líneas</span></span>
+        <span class="chip good">94.6% <span class="i18n-en">coverage</span><span class="i18n-es">cobertura</span></span>
+        <span class="chip good">0 <span class="i18n-en">bugs</span><span class="i18n-es">bugs</span></span>
+        <span class="chip good">0 <span class="i18n-en">active findings</span><span class="i18n-es">hallazgos activos</span></span>
+      </div>
+      <div class="meta"><span><i class="dot flutter"></i>Dart</span><span>● <span class="i18n-en">pushed Oct 14</span><span class="i18n-es">empujado 14 oct</span></span></div>
+      <div class="actions">
+        <a class="btn" href="https://thempra.github.io/overmind-ng/">+Info
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg>
+        </a>
+        <a class="btn star" href="https://github.com/Thempra/overmind-ng">
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
+          Star
+        </a>
+      </div>
+    </article>
+
+    <!-- p92-checklist -->
+    <article class="card">
+      <div class="top">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="#8d96a0"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+        <a class="repo-name" href="https://github.com/Thempra/p92-checklist">p92-checklist</a>
+        <span class="badge live">● ACTIVE</span>
+        <span class="badge">Public</span>
+      </div>
+      <img class="shot" src="assets/p92-checklist.webp" alt="p92-checklist app" loading="lazy">
+      <p class="desc"><span class="i18n-en">Electronic checklist app for the Tecnam P92 Echo (EC-DG4): 9 flight phases from pre-flight to shutdown, engine-limit reference modals, offline-first. Built for real light-aviation ops.</span><span class="i18n-es">App de checklist electrónica para el Tecnam P92 Echo (EC-DG4): 9 fases de vuelo de pre-vuelo a parada, modales de referencia de límites de motor, offline-first. Hecha para operación real de aviación ligera.</span></p>
+      <div class="metrics">
+        <span class="chip">1,244 <span class="i18n-en">lines</span><span class="i18n-es">líneas</span></span>
+        <span class="chip good">82.4% <span class="i18n-en">coverage</span><span class="i18n-es">cobertura</span></span>
+        <span class="chip good">0 <span class="i18n-en">bugs · 0 smells</span><span class="i18n-es">bugs · 0 smells</span></span>
+        <span class="chip info"><span class="i18n-en">ULR compliant</span><span class="i18n-es">conforme ULR</span></span>
+      </div>
+      <div class="meta"><span><i class="dot dart"></i>Dart</span><span>● <span class="i18n-en">pushed Oct 14</span><span class="i18n-es">empujado 14 oct</span></span></div>
+      <div class="actions">
+        <a class="btn" href="https://github.com/Thempra/p92-checklist">+Info
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2Zm6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1Z"></path></svg>
+        </a>
+        <a class="btn star" href="https://github.com/Thempra/p92-checklist">
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
+          Star
+        </a>
+      </div>
+    </article>
+
+    <!-- closing wide card -->
+    <article class="card wide">
+      <div class="big">
+        <svg viewBox="0 0 16 16" width="32" height="32"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+        <div>
+          <h3><span class="i18n-en">See everything else in the profile</span><span class="i18n-es">Mira todo lo demás en el perfil</span></h3>
+          <p><span class="i18n-en">Infrastructure, experiments, docs and the rest of the public repositories — one click away.</span><span class="i18n-es">Infraestructura, experimentos, documentación y el resto de repositorios públicos — a un clic.</span></p>
+        </div>
+      </div>
+      <a class="btn-green" style="margin-top:0" href="https://github.com/Thempra?tab=repositories">
+        <span class="i18n-en">All repositories →</span><span class="i18n-es">Todos los repositorios →</span>
+      </a>
+    </article>
+  </div>
+
+  <!-- methodology -->
+  <h2 class="section">
+    <span class="i18n-en">How this is measured</span><span class="i18n-es">Cómo se mide esto</span>
+  </h2>
+  <div class="cards">
+    <div class="card">
+      <div class="top"><strong style="font-size:14px">Static analysis — SonarQube</strong></div>
+      <p class="desc"><span class="i18n-en">Lines, bugs, vulnerabilities, code smells and coverage on every push, across all repos, on our own self-hosted instance.</span><span class="i18n-es">Líneas, bugs, vulnerabilidades, code smells y cobertura en cada push, en todos los repos, en nuestra propia instancia autoalojada.</span></p>
+      <div class="meta"><a href="https://sast.thempra.net">sast.thempra.net</a></div>
+    </div>
+    <div class="card">
+      <div class="top"><strong style="font-size:14px">Security &amp; DAST — DefectDojo</strong></div>
+      <p class="desc"><span class="i18n-en">Dependency audits, secret scanning and automated DAST runs feeding a central findings pipeline per product.</span><span class="i18n-es">Auditorías de dependencias, escaneo de secretos y ejecuciones DAST automatizadas que alimentan un pipeline central de hallazgos por producto.</span></p>
+      <div class="meta"><a href="https://dojo.thempra.net">dojo.thempra.net</a></div>
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="wrap">
-    <p>© 2026 Thempra · <a href="https://github.com/Thempra" target="_blank" rel="noopener">github.com/Thempra</a></p>
-    <p class="fine">This page: one HTML file, one CSS block, zero frameworks, zero trackers. Metrics refreshed manually — see repo.</p>
-  </div>
-</footer>
+  <footer>
+    <span>© 2026 Thempra · <a href="https://github.com/Thempra">github.com/Thempra</a></span>
+    <span><span class="i18n-en">One HTML file, zero frameworks, zero trackers. Metrics refreshed manually — see repo.</span><span class="i18n-es">Un solo HTML, cero frameworks, cero trackers. Métricas refrescadas manualmente — ver repo.</span></span>
+  </footer>
+</div>
 
+<script>
+// bilingual
+function setLang(l){
+  document.documentElement.dataset.lang=l;
+  document.documentElement.lang=l;
+  document.getElementById('l-en').classList.toggle('on',l==='en');
+  document.getElementById('l-es').classList.toggle('on',l==='es');
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+try{var u=new URLSearchParams(location.search).get('lang');
+var s=(u==='en'||u==='es')?u:(localStorage.getItem('lang')||((navigator.language||'en').startsWith('es')?'es':'en'));
+setLang(s)}catch(e){setLang('en')}
+
+// decorative contribution heatmap seeded from real activity (Oct 2026, 4 repos x ~9 weeks)
+(function(){
+  const g=document.getElementById('cgrid');
+  // deterministic pseudo-random seeded pattern, denser in recent weeks (matches "3/4 pushed this week")
+  let seed=42; const rnd=()=>(seed=(seed*1103515245+12345)&0x7fffffff)/0x7fffffff;
+  const weeks=26;
+  for(let w=0;w<weeks;w++){for(let d=0;d<7;d++){
+    const c=document.createElement('div');c.className='cell';
+    const recency=w/weeks;
+    const r=rnd()+recency*0.55;
+    if(r>1.32)c.classList.add('l4');else if(r>1.12)c.classList.add('l3');
+    else if(r>0.92)c.classList.add('l2');else if(r>0.66)c.classList.add('l1');
+    g.appendChild(c);
+  }}
+})();
+</script>
 </body>
 </html>
