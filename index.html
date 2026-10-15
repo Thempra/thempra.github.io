@@ -68,7 +68,7 @@
   .card{border:1px solid var(--border);border-radius:6px;background:var(--canvas);
     padding:16px;display:flex;flex-direction:column;transition:border-color .15s}
   .card:hover{border-color:#8c959f}
-  .card.wide{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .card.wide{grid-column:1/-1;display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px 28px}
   .card .top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
   .repo-name{color:var(--accent);font-weight:600;font-size:15px}
   .badge{font-size:12px;color:var(--fg-muted);border:1px solid var(--border);border-radius:20px;padding:0 9px;line-height:20px}
@@ -93,8 +93,14 @@
   .btn.star{border-radius:20px}
   .btn svg{fill:currentColor}
 
-  .card.wide .mosaic{width:340px;max-width:100%;border:1px solid var(--border);border-radius:6px;display:block}
-  @media(max-width:768px){.card.wide .mosaic{width:100%}}
+  .card.wide .mosaic{width:360px;max-width:100%;grid-column:2;grid-row:1/span 2;align-self:stretch;
+    height:auto;border:1px solid var(--border);border-radius:6px;display:block;background:#fff}
+  .card.wide .cta-row{grid-column:1}
+  @media(max-width:768px){
+    .card.wide{grid-template-columns:1fr}
+    .card.wide .mosaic{grid-column:1;grid-row:auto;width:100%}
+    .card.wide .cta-row{grid-column:1}
+  }
 
   /* ---------- SAST/DAST scorecard table ---------- */
   .scorewrap{border:1px solid var(--border);border-radius:6px;overflow:hidden}
@@ -308,10 +314,12 @@
           <p><span class="i18n-en">Infrastructure, experiments, docs and the rest of the public repositories — one click away.</span><span class="i18n-es">Infraestructura, experimentos, documentación y el resto de repositorios públicos — a un clic.</span></p>
         </div>
       </div>
+      <div class="cta-row">
+        <a class="btn-green" style="margin-top:0" href="https://github.com/Thempra?tab=repositories">
+          <span class="i18n-en">All repositories →</span><span class="i18n-es">Todos los repositorios →</span>
+        </a>
+      </div>
       <img class="mosaic" src="assets/more-repos.webp" alt="More repositories in the Thempra profile" loading="lazy">
-      <a class="btn-green" style="margin-top:0" href="https://github.com/Thempra?tab=repositories">
-        <span class="i18n-en">All repositories →</span><span class="i18n-es">Todos los repositorios →</span>
-      </a>
     </article>
   </div>
 
