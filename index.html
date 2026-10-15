@@ -64,24 +64,7 @@
     border-radius:6px;padding:5px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-left:6px}
   .langbtn.on{background:#218bff;border-color:rgba(31,35,40,.1);color:#fff}
 
-  /* ---------- BIG SAST/DAST stat strip ---------- */
-  .statstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);
-    border:1px solid var(--border);border-radius:6px;overflow:hidden;margin:24px 0}
-  @media(max-width:768px){.statstrip{grid-template-columns:repeat(2,1fr)}}
-  .stat{background:var(--canvas);padding:18px 20px;text-align:center}
-  .stat .num{font-size:34px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
-  .stat .num.green{color:var(--success)} .stat .num.blue{color:var(--accent)}
-  .stat .num.purple{color:var(--done)}
-  .stat .lbl{font-size:12px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
-  .stat .src{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;border-radius:20px;padding:1px 8px;margin-top:8px}
-  .src.sast{background:var(--blue-bg);color:var(--accent)}
-  .src.dast{background:var(--purple-bg);color:var(--done)}
 
-  /* ---------- quality banner ---------- */
-  .quality{display:flex;gap:12px;margin:0 0 24px;padding:14px 16px;border:1px solid var(--border);
-    border-left:4px solid var(--success);border-radius:6px;background:var(--canvas-subtle);
-    font-size:14px;flex-wrap:wrap;align-items:center}
-  .quality svg{fill:var(--success);flex:none}
 
   h2.section{font-size:16px;font-weight:600;margin:32px 0 4px;display:flex;align-items:center;gap:8px}
   .sect-sub{color:var(--fg-muted);font-size:14px;margin:0 0 16px}
@@ -116,6 +99,9 @@
   .btn:hover{background:var(--btn-hover);text-decoration:none}
   .btn.star{border-radius:20px}
   .btn svg{fill:currentColor}
+
+  .card.wide .mosaic{width:340px;max-width:100%;border:1px solid var(--border);border-radius:6px;display:block}
+  @media(max-width:768px){.card.wide .mosaic{width:100%}}
 
   /* ---------- SAST/DAST scorecard table ---------- */
   .scorewrap{border:1px solid var(--border);border-radius:6px;overflow:hidden}
@@ -177,11 +163,7 @@
 
   <!-- profile -->
   <section class="profile">
-    <svg class="avatar" viewBox="0 0 296 296" role="img" aria-label="Thempra">
-      <rect width="296" height="296" rx="148" fill="#ddf4ff"/>
-      <circle cx="148" cy="148" r="147" fill="none" stroke="#b6e3ff"/>
-      <text x="148" y="178" text-anchor="middle" font-size="110" font-weight="700" fill="#0969da" font-family="ui-monospace,SFMono-Regular,monospace">&gt;_</text>
-    </svg>
+    <img class="avatar" src="https://avatars.githubusercontent.com/u/749975?v=4&s=296" width="296" height="296" alt="José Carlos Temprado (Thempra) avatar">
     <div class="who">
       <h1>José Carlos Temprado</h1>
       <div class="nick">Thempra</div>
@@ -200,36 +182,6 @@
       </a>
     </div>
   </section>
-
-  <!-- BIG SAST/DAST STRIP -->
-  <div class="statstrip">
-    <div class="stat">
-      <div class="num blue">21.4K</div>
-      <div class="lbl"><span class="i18n-en">lines under SAST</span><span class="i18n-es">líneas bajo SAST</span></div>
-      <span class="src sast">SONARQUBE</span>
-    </div>
-    <div class="stat">
-      <div class="num green">0</div>
-      <div class="lbl"><span class="i18n-en">open vulnerabilities</span><span class="i18n-es">vulnerabilidades abiertas</span></div>
-      <span class="src sast">SONARQUBE</span>
-    </div>
-    <div class="stat">
-      <div class="num purple">0</div>
-      <div class="lbl"><span class="i18n-en">DAST / audit findings</span><span class="i18n-es">hallazgos DAST / auditoría</span></div>
-      <span class="src dast">DEFECTDOJO</span>
-    </div>
-    <div class="stat">
-      <div class="num green">94.6%</div>
-      <div class="lbl"><span class="i18n-en">best coverage</span><span class="i18n-es">mejor cobertura</span></div>
-      <span class="src sast">SONARQUBE</span>
-    </div>
-  </div>
-
-  <div class="quality">
-    <svg viewBox="0 0 16 16" width="20" height="20"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm3.78 5.03a.75.75 0 0 0-1.06 0L7 8.94 5.28 7.22a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042l2.25 2.25a.75.75 0 0 0 1.06 0l4.25-4.25a.75.75 0 0 0 0-1.06Z"></path></svg>
-    <span><span class="i18n-en"><strong>Every metric on this page is machine-generated.</strong> Static analysis runs on every push; DAST, dependency audits and secret scanning feed DefectDojo per product. Nothing here is estimated or curated.</span>
-    <span class="i18n-es"><strong>Cada métrica de esta página la genera una máquina.</strong> El análisis estático corre en cada push; DAST, auditorías de dependencias y escaneo de secretos alimentan DefectDojo por producto. Nada aquí es estimado ni curado a mano.</span></span>
-  </div>
 
   <!-- tabs -->
   <nav class="tabs">
@@ -276,7 +228,7 @@
         </a>
         <a class="btn star" href="https://github.com/Thempra/qzero">
           <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
-          Star
+          <span class="i18n-en">Repository</span><span class="i18n-es">Repositorio</span>
         </a>
       </div>
     </article>
@@ -304,7 +256,7 @@
         </a>
         <a class="btn star" href="https://github.com/Thempra/vagustrader">
           <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
-          Star
+          <span class="i18n-en">Repository</span><span class="i18n-es">Repositorio</span>
         </a>
       </div>
     </article>
@@ -332,7 +284,7 @@
         </a>
         <a class="btn star" href="https://github.com/Thempra/overmind-ng">
           <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
-          Star
+          <span class="i18n-en">Repository</span><span class="i18n-es">Repositorio</span>
         </a>
       </div>
     </article>
@@ -360,7 +312,7 @@
         </a>
         <a class="btn star" href="https://github.com/Thempra/p92-checklist">
           <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
-          Star
+          <span class="i18n-en">Repository</span><span class="i18n-es">Repositorio</span>
         </a>
       </div>
     </article>
@@ -374,6 +326,7 @@
           <p><span class="i18n-en">Infrastructure, experiments, docs and the rest of the public repositories — one click away.</span><span class="i18n-es">Infraestructura, experimentos, documentación y el resto de repositorios públicos — a un clic.</span></p>
         </div>
       </div>
+      <img class="mosaic" src="assets/more-repos.webp" alt="More repositories in the Thempra profile" loading="lazy">
       <a class="btn-green" style="margin-top:0" href="https://github.com/Thempra?tab=repositories">
         <span class="i18n-en">All repositories →</span><span class="i18n-es">Todos los repositorios →</span>
       </a>
